@@ -11,7 +11,7 @@ export function validateBodyMiddleware<T extends ZodRawShape>(
       next();
     } catch (err) {
       if (err instanceof z.ZodError) {
-        next(ApiError.BadRequest("Validation error", err));
+        next(ApiError.BadRequest("Validation error", err.flatten().fieldErrors));
       } else {
         next(err);
       }

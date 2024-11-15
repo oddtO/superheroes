@@ -1,14 +1,14 @@
 import type { ZodError } from "zod";
 export class ApiError extends Error {
   status: number;
-  errorsWrapper?: ZodError;
-  constructor(status: number, message: string, errorsWrapper?: ZodError) {
+  errorsWrapper?: unknown;
+  constructor(status: number, message: string, errorsWrapper?: unknown) {
     super(message);
     this.status = status;
     this.errorsWrapper = errorsWrapper;
   }
 
-  static BadRequest(message: string, errorsWrapper: ZodError) {
+  static BadRequest(message: string, errorsWrapper?: unknown) {
     return new ApiError(400, message, errorsWrapper);
   }
 

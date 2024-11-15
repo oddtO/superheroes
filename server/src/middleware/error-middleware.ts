@@ -11,7 +11,7 @@ export function errorMiddleware(
   if (err instanceof ApiError) {
     res.status(err.status).json({
       message: err.message,
-      errors: err.errorsWrapper?.flatten().fieldErrors,
+      errors: err.errorsWrapper,
     });
   } else {
     console.log(err);

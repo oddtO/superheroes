@@ -1,6 +1,8 @@
 import multer from "multer";
+import { ApiError } from "../exceptions/api-error";
 // Memory storage configuration
 const storage = multer.memoryStorage();
+
 export const uploadMiddleware = multer({
   storage: storage,
   fileFilter: (req, file, cb) => {
@@ -12,7 +14,7 @@ export const uploadMiddleware = multer({
     ) {
       cb(null, true);
     } else {
-      cb(new Error("Invalid file type"));
+      cb(ApiError.BadRequest("file type not allowed"));
     }
   },
 
