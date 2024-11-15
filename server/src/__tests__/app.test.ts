@@ -181,6 +181,7 @@ describe("Test application database", () => {
     expect(superhero).toMatchObject(superheroText);
 
     expect(superhero.image_types[0]).toBe("image/webp");
+    //typescript is buggy with jest-extended but the tests should still be able to run
     expect(superhero.image_types[1]).toBeOneOf(["image/jpeg", "image/jpg"]);
     expect(superhero.image_types[2]).toBe("image/png");
     expect(superhero.image_types[3]).toBe("image/png");

@@ -1,8 +1,6 @@
 import pool from "../pool";
 import { sql } from "@pgtyped/runtime";
 import {
-  IAddSuperheroImagesParams,
-  IAddSuperheroImagesQuery,
   IAddSuperheroMainTableQuery,
   IGetSuperheroAllDataQuery,
   IGetSuperheroAllDataResult,
@@ -10,6 +8,7 @@ import {
 } from "./superheroes.types";
 import { INewSuperhero } from "../../types/types";
 import { createDataUrl } from "../../utils/createDataUrl";
+import { imagesDb } from "./images";
 class Superheroes {
   getSuperheroesWithTheirFirstImage() {
     const getSuperheroes = sql<IGetSuperheroesQuery>`
@@ -94,16 +93,6 @@ class Superheroes {
       RETURNING
         *;
     `;
-    const addSuperheroImages = sql<IAddSuperheroImagesQuery>`
-      INSERT INTO
-        images_superheroes (
-          superhero_id,
-          image_data,
-          original_filename,
-          mime_type
-        )
-      VALUES $$images_superheroes(superhero_id, image_data, original_filename, mime_type);
-    `;
 
     const newSuperheroWrapper = await addSuperheroMainTable.run(
       {
@@ -116,23 +105,7 @@ class Superheroes {
       pool,
     );
     const newSuperhero = newSuperheroWrapper[0];
-
-    const newImagesParams = superheroData.images_b64?.map((image, i) => {
-      return {
-        superhero_id: newSuperhero.id,
-        image_data: superheroData.images_b64?.[i],
-        original_filename: superheroData.image_filenames?.[i] ?? null,
-        mime_type: superheroData.image_types?.[i] ?? null,
-      };
-    });
-    if (superheroData.images_b64?.length != 0) {
-      await addSuperheroImages.run(
-        {
-          images_superheroes: newImagesParams!,
-        },
-        pool,
-      );
-    }
+    await imagesDb.addImagesToSuperhero(newSuperhero.id, superheroData);
 
     pool.query("COMMIT");
     const newSuperheroAllData = await this.getSuperheroAllData(newSuperhero.id);

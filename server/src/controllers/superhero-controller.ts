@@ -1,7 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
 import { superheroService } from "../services/superhero-service";
 import { ISuperhero } from "../schemas/superheroSchema";
-import { IAddSuperheroImagesParams } from "../db/queries/superheroes.types";
 import { IFile } from "../types/types";
 import { createDataUrl } from "../utils/createDataUrl";
 class SuperheroController {
