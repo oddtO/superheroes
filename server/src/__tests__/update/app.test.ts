@@ -10,18 +10,13 @@ import {
 } from "../mocks/superhero";
 import path from "path";
 import { areFilesEqual } from "../utils/checkFileEquality";
-
+import { getAllSuperheroData } from "../utils/get-all-superhero-data";
 /* jest.mock("../../db/pool");
 
 beforeEach(commonBeforeEach);
 afterEach(commonAfterEach);
 afterAll(commonAfterAll); */
 
-async function getAllSuperheroData(id: string, appParam: typeof app) {
-  const response = await request(appParam).get(`/api/superhero/${id}`);
-
-  return response.body;
-}
 describe("Test updating requests", () => {
   beforeEach(async () => {
     await request(app)

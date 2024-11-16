@@ -102,3 +102,24 @@ export interface IUpdateSuperheroQuery {
   result: IUpdateSuperheroResult;
 }
 
+/** 'DeleteSuperhero' parameters type */
+export interface IDeleteSuperheroParams {
+  id?: NumberOrString | null | void;
+}
+
+/** 'DeleteSuperhero' return type */
+export interface IDeleteSuperheroResult {
+  catch_phrase: string;
+  id: string;
+  nickname: string;
+  origin_description: string;
+  real_name: string;
+  superpowers: string;
+}
+
+/** 'DeleteSuperhero' query type */
+export interface IDeleteSuperheroQuery {
+  params: IDeleteSuperheroParams;
+  result: IDeleteSuperheroResult;
+}
+

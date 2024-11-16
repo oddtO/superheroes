@@ -2,6 +2,7 @@ import pool from "../pool";
 import { sql } from "@pgtyped/runtime";
 import {
   IAddSuperheroMainTableQuery,
+  IDeleteSuperheroQuery,
   IGetSuperheroAllDataQuery,
   IGetSuperheroAllDataResult,
   IGetSuperheroesQuery,
@@ -158,6 +159,21 @@ class Superheroes {
 
     await pool.query("COMMIT");
     return newFullSuperhero;
+  }
+
+  async deleteSuperhero(id: string) {
+    const deleteSuperhero = sql<IDeleteSuperheroQuery>`
+      DELETE FROM superheroes
+      WHERE
+        id = $id
+      RETURNING
+        *;
+    `;
+    const deletedSuperhero = await deleteSuperhero.run({ id }, pool);
+    if (deletedSuperhero.length === 0) {
+      return null;
+    }
+    return deletedSuperhero;
   }
 }
 

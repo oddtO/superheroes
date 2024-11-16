@@ -13,6 +13,8 @@ global.beforeAll(async () => {
   );
   await pool.query("TRUNCATE TABLE superheroes RESTART IDENTITY CASCADE;");
   await pool.query(`
+DROP TABLE IF EXISTS images_superheroes;
+DROP TABLE IF EXISTS superheroes;
 
 CREATE TABLE IF NOT EXISTS superheroes (
     id bigint GENERATED ALWAYS AS IDENTITY,
@@ -31,7 +33,7 @@ CREATE TABLE IF NOT EXISTS images_superheroes (
     mime_type text NOT NULL,
     original_filename text NOT NULL,
     PRIMARY KEY (id, superhero_id),
-    FOREIGN KEY (superhero_id) REFERENCES superheroes (id)
+    FOREIGN KEY (superhero_id) REFERENCES superheroes (id) ON DELETE CASCADE
 );
 `);
 });

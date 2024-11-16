@@ -23,4 +23,6 @@ router.patch(
   superheroController.updateSuperhero,
 );
 
+router.delete("/superhero/:id", superheroController.deleteSuperhero);
+
 export default router;

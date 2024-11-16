@@ -28,6 +28,13 @@ class SuperheroService {
     }
     return updatedSuperhero;
   }
+  async deleteSuperhero(id: string) {
+    const deletedSuperhero = await superheroesDb.deleteSuperhero(id);
+    if (!deletedSuperhero) {
+      throw ApiError.NotFoundError();
+    }
+    return deletedSuperhero;
+  }
 }
 
 export const superheroService = new SuperheroService();

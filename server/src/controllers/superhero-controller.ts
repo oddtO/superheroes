@@ -96,6 +96,19 @@ class SuperheroController {
       next(error);
     }
   }
+  async deleteSuperhero(
+    req: Request<{ id: string }>,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      const { id } = req.params;
+      await superheroService.deleteSuperhero(id);
+      res.sendStatus(200);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export const superheroController = new SuperheroController();
