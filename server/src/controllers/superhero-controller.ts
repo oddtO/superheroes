@@ -1,9 +1,9 @@
 import type { Request, Response, NextFunction } from "express";
 import { superheroService } from "../services/superhero-service";
-import { ISuperhero } from "../schemas/superheroSchema";
+import { ISuperhero } from "../schemas/superhero-schema";
 import { IFile, INewSuperhero, IUpdatedSuperhero } from "../types/types";
-import { createDataUrl } from "../utils/createDataUrl";
-import { UpdateSuperhero } from "../schemas/updateSuperheroSchema";
+import { createDataUrl } from "../utils/create-data-url";
+import { UpdateSuperhero } from "../schemas/update-superhero-schema";
 class SuperheroController {
   async getSuperheroes(req: Request, res: Response, next: NextFunction) {
     try {

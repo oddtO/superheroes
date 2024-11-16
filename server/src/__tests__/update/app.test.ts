@@ -6,10 +6,8 @@ import {
   superheroTextIronMan,
   filesDirName,
   legalFiles,
-  illegalFiles,
 } from "../mocks/superhero";
 import path from "path";
-import { areFilesEqual } from "../utils/checkFileEquality";
 import { getAllSuperheroData } from "../utils/get-all-superhero-data";
 /* jest.mock("../../db/pool");
 

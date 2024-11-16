@@ -3,14 +3,10 @@ import app from "../../app";
 // import { commonBeforeEach, commonAfterEach, commonAfterAll } from "../common";
 import {
   superheroText,
-  superheroTextIronMan,
   filesDirName,
   legalFiles,
-  illegalFiles,
 } from "../mocks/superhero";
 import path from "path";
-import { areFilesEqual } from "../utils/checkFileEquality";
-import { getAllSuperheroData } from "../utils/get-all-superhero-data";
 
 describe("pagination", () => {
   beforeEach(async () => {

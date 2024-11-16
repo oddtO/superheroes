@@ -9,7 +9,7 @@ import {
   illegalFiles,
 } from "../mocks/superhero";
 import path from "path";
-import { areFilesEqual } from "../utils/checkFileEquality";
+import { areFilesEqual } from "../utils/check-file-equality";
 
 // jest.mock("../../db/pool");
 /* jest.mock("../../db/pool");

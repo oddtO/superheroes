@@ -9,5 +9,5 @@ module.exports = {
 
   resetMocks: true,
   testMatch: ["**/?(*.)+(spec|test).ts"],
-  setupFilesAfterEnv: ["./src/setupTests.ts"],
+  setupFilesAfterEnv: ["./src/setup-tests.ts"],
 };

@@ -1,4 +1,4 @@
-import { SuperheroSchema } from "./superheroSchema";
+import { SuperheroSchema } from "./superhero-schema";
 
 import { z } from "zod";
 

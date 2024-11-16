@@ -12,7 +12,7 @@ import {
   IUpdateSuperheroResult,
 } from "./superheroes.types";
 import { INewSuperhero, IUpdatedSuperhero } from "../../types/types";
-import { createDataUrl } from "../../utils/createDataUrl";
+import { createDataUrl } from "../../utils/create-data-url";
 import { imagesDb } from "./images";
 import { PAGE_SIZE } from "../../globals";
 class Superheroes {
