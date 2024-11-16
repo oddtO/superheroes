@@ -1,39 +1,22 @@
 import request from "supertest";
-import app from "../app";
+import app from "../../app";
+// import { commonBeforeEach, commonAfterEach, commonAfterAll } from "../common";
 import {
-  commonBeforeEach,
-  commonAfterEach,
-  commonAfterAll,
-  DATAURL_BUFFER_OFFSET,
-} from "./common";
-import { superheroText } from "./mocks/superhero";
+  superheroText,
+  superheroTextIronMan,
+  filesDirName,
+  legalFiles,
+  illegalFiles,
+} from "../mocks/superhero";
 import path from "path";
-import { loadFile } from "./mocks/utils/loadFile";
-import base64 from "base-64";
-import { createDataUrl } from "../utils/createDataUrl";
-import { areFilesEqual } from "./utils/checkFileEquality";
+import { areFilesEqual } from "../utils/checkFileEquality";
 
-jest.mock("../db/pool");
+// jest.mock("../../db/pool");
+/* jest.mock("../../db/pool");
 beforeEach(commonBeforeEach);
 afterEach(commonAfterEach);
-afterAll(commonAfterAll);
+afterAll(commonAfterAll); */
 
-const legalFiles = {
-  png: [
-    "./mocks/assets/1png_dummy_1000x1200_b9f280.png",
-    "./mocks/assets/2png_dummy_600x400_000000_3ce8df.png",
-    "./mocks/assets/3png_dummy_600x400_ffffff_cccccc.png",
-  ],
-  jpg: ["./mocks/assets/1jpg_dummy_800x600_000000_b9f280.jpg"],
-  webp: ["./mocks/assets/1webp_dummy_1200x1200_000000_b9f280.webp"],
-};
-
-const illegalFiles = [
-  "./mocks/assets/1svg_dummy_500x600_000000_b9f280.svg",
-  "./mocks/assets/csv_notAnImage.csv",
-  "./mocks/assets/noext_notAnImage",
-  "./mocks/assets/txt_notAnImage.txt",
-];
 describe("Test application database", () => {
   test("should be empty", (done) => {
     request(app)
@@ -96,11 +79,11 @@ describe("Test application database", () => {
       .field("origin_description", superheroText.origin_description)
       .field("catch_phrase", superheroText.catch_phrase)
       .field("superpowers", superheroText.superpowers)
-      .attach("images", path.join(__dirname, legalFiles.webp[0]))
-      .attach("images", path.join(__dirname, legalFiles.jpg[0]))
-      .attach("images", path.join(__dirname, legalFiles.png[0]))
-      .attach("images", path.join(__dirname, legalFiles.png[1]))
-      .attach("images", path.join(__dirname, legalFiles.png[2]))
+      .attach("images", path.join(filesDirName, legalFiles.webp[0]))
+      .attach("images", path.join(filesDirName, legalFiles.jpg[0]))
+      .attach("images", path.join(filesDirName, legalFiles.png[0]))
+      .attach("images", path.join(filesDirName, legalFiles.png[1]))
+      .attach("images", path.join(filesDirName, legalFiles.png[2]))
       .set("Content-Type", "application/json");
 
     expect(postResult.status).toBe(201);
@@ -113,7 +96,7 @@ describe("Test application database", () => {
     expect(superheroes[0]).toMatchObject(superheroText);
     const superhero = superheroes[0];
 
-    areFilesEqual(__dirname, superhero.first_image, legalFiles.webp[0]);
+    areFilesEqual(filesDirName, superhero.first_image, legalFiles.webp[0]);
   });
   test("should add a valid superhero object (without images)", async () => {
     const postResult = await request(app)
@@ -143,11 +126,11 @@ describe("Test application database", () => {
       .field("origin_description", superheroText.origin_description)
       .field("catch_phrase", superheroText.catch_phrase)
       .field("superpowers", superheroText.superpowers)
-      .attach("images", path.join(__dirname, legalFiles.webp[0]))
-      .attach("images", path.join(__dirname, legalFiles.jpg[0]))
-      .attach("images", path.join(__dirname, legalFiles.png[0]))
-      .attach("images", path.join(__dirname, legalFiles.png[2]))
-      .attach("images", path.join(__dirname, illegalFiles[0]));
+      .attach("images", path.join(filesDirName, legalFiles.webp[0]))
+      .attach("images", path.join(filesDirName, legalFiles.jpg[0]))
+      .attach("images", path.join(filesDirName, legalFiles.png[0]))
+      .attach("images", path.join(filesDirName, legalFiles.png[2]))
+      .attach("images", path.join(filesDirName, illegalFiles[0]));
 
     expect(postResult.status).toBe(400);
     expect(postResult.body).toStrictEqual({
@@ -163,11 +146,11 @@ describe("Test application database", () => {
       .field("origin_description", superheroText.origin_description)
       .field("catch_phrase", superheroText.catch_phrase)
       .field("superpowers", superheroText.superpowers)
-      .attach("images", path.join(__dirname, legalFiles.webp[0]))
-      .attach("images", path.join(__dirname, legalFiles.jpg[0]))
-      .attach("images", path.join(__dirname, legalFiles.png[0]))
-      .attach("images", path.join(__dirname, legalFiles.png[1]))
-      .attach("images", path.join(__dirname, legalFiles.png[2]))
+      .attach("images", path.join(filesDirName, legalFiles.webp[0]))
+      .attach("images", path.join(filesDirName, legalFiles.jpg[0]))
+      .attach("images", path.join(filesDirName, legalFiles.png[0]))
+      .attach("images", path.join(filesDirName, legalFiles.png[1]))
+      .attach("images", path.join(filesDirName, legalFiles.png[2]))
       .set("Content-Type", "application/json")
       .set("Accept", "application/json");
 
@@ -181,16 +164,68 @@ describe("Test application database", () => {
     expect(superhero).toMatchObject(superheroText);
 
     expect(superhero.image_types[0]).toBe("image/webp");
-    //typescript is buggy with jest-extended but the tests should still be able to run
     expect(superhero.image_types[1]).toBeOneOf(["image/jpeg", "image/jpg"]);
     expect(superhero.image_types[2]).toBe("image/png");
     expect(superhero.image_types[3]).toBe("image/png");
     expect(superhero.image_types[4]).toBe("image/png");
 
-    areFilesEqual(__dirname, superhero.images_b64[0], legalFiles.webp[0]);
-    areFilesEqual(__dirname, superhero.images_b64[1], legalFiles.jpg[0]);
-    areFilesEqual(__dirname, superhero.images_b64[2], legalFiles.png[0]);
-    areFilesEqual(__dirname, superhero.images_b64[3], legalFiles.png[1]);
-    areFilesEqual(__dirname, superhero.images_b64[4], legalFiles.png[2]);
+    areFilesEqual(filesDirName, superhero.images_b64[0], legalFiles.webp[0]);
+    areFilesEqual(filesDirName, superhero.images_b64[1], legalFiles.jpg[0]);
+    areFilesEqual(filesDirName, superhero.images_b64[2], legalFiles.png[0]);
+    areFilesEqual(filesDirName, superhero.images_b64[3], legalFiles.png[1]);
+    areFilesEqual(filesDirName, superhero.images_b64[4], legalFiles.png[2]);
+
+    expect(superhero.image_ids[0]).toBe("1");
+    expect(superhero.image_ids[1]).toBe("2");
+    expect(superhero.image_ids[2]).toBe("3");
+    expect(superhero.image_ids[3]).toBe("4");
+    expect(superhero.image_ids[4]).toBe("5");
   });
+
+  test("multiple superheroes image id ordering", async () => {
+    const postResult = await request(app)
+      .post("/api/superheroes")
+      .field("nickname", superheroText.nickname)
+      .field("real_name", superheroText.real_name)
+      .field("origin_description", superheroText.origin_description)
+      .field("catch_phrase", superheroText.catch_phrase)
+      .field("superpowers", superheroText.superpowers)
+      .attach("images", path.join(filesDirName, legalFiles.webp[0]))
+      .attach("images", path.join(filesDirName, legalFiles.jpg[0]))
+      .attach("images", path.join(filesDirName, legalFiles.png[0]))
+      .attach("images", path.join(filesDirName, legalFiles.png[1]))
+      .attach("images", path.join(filesDirName, legalFiles.png[2]))
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json");
+
+    const postResultIronMan = await request(app)
+      .post("/api/superheroes")
+      .field("nickname", superheroTextIronMan.nickname)
+      .field("real_name", superheroTextIronMan.real_name)
+      .field("origin_description", superheroTextIronMan.origin_description)
+      .field("catch_phrase", superheroTextIronMan.catch_phrase)
+      .field("superpowers", superheroTextIronMan.superpowers)
+      .attach("images", path.join(filesDirName, legalFiles.webp[0]))
+      .attach("images", path.join(filesDirName, legalFiles.jpg[0]))
+      .attach("images", path.join(filesDirName, legalFiles.png[0]))
+      .attach("images", path.join(filesDirName, legalFiles.png[1]))
+      .attach("images", path.join(filesDirName, legalFiles.png[2]))
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json");
+
+    const spiderMan = await request(app).get("/api/superhero/1");
+
+    const ironMan = await request(app).get("/api/superhero/2");
+
+    expect(spiderMan.body.image_ids[0]).toBe("1");
+    expect(spiderMan.body.image_ids[1]).toBe("2");
+    expect(spiderMan.body.image_ids[2]).toBe("3");
+    expect(spiderMan.body.image_ids[3]).toBe("4");
+    expect(spiderMan.body.image_ids[4]).toBe("5");
+
+    expect(ironMan.body.image_ids[0]).toBe("6");
+    expect(ironMan.body.image_ids[1]).toBe("7");
+    expect(ironMan.body.image_ids[2]).toBe("8");
+    expect(ironMan.body.image_ids[3]).toBe("9");
+    expect(ironMan.body.image_ids[4]).toBe("10")});
 });

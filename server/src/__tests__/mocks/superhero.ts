@@ -8,3 +8,35 @@ export const superheroText = {
   superpowers: "Spider-sense",
   catch_phrase: "With great power comes great responsibility.",
 };
+
+
+
+export const superheroTextIronMan = {
+  nickname: "Iron Man",
+  real_name: "Tony Stark",
+  origin_description:
+    "Tony Stark, a genius billionaire, playboy, and philanthropist, was captured by terrorists while demonstrating his weapons technology overseas. Gravely injured and held hostage, he created a miniaturized arc reactor to power an electromagnet keeping shrapnel from reaching his heart. Using the same technology, he built a suit of armor to escape. Returning home, Tony decided to stop manufacturing weapons and dedicated his life to improving his armor and protecting the world as Iron Man. Along the way, he faced formidable foes like Obadiah Stane, the Mandarin, and Thanos, while grappling with his own inner demons and quest for redemption.",
+  superpowers: "Genius-level intellect, advanced powered armor, vast wealth, and resourcefulness.",
+  catch_phrase: "I am Iron Man.",
+};
+
+
+
+export const filesDirName = __dirname;
+
+export const legalFiles = {
+  png: [
+    "./assets/1png_dummy_1000x1200_b9f280.png",
+    "./assets/2png_dummy_600x400_000000_3ce8df.png",
+    "./assets/3png_dummy_600x400_ffffff_cccccc.png",
+  ],
+  jpg: ["./assets/1jpg_dummy_800x600_000000_b9f280.jpg"],
+  webp: ["./assets/1webp_dummy_1200x1200_000000_b9f280.webp"],
+};
+
+export const illegalFiles = [
+  "./assets/1svg_dummy_500x600_000000_b9f280.svg",
+  "./assets/csv_notAnImage.csv",
+  "./assets/noext_notAnImage",
+  "./assets/txt_notAnImage.txt",
+];

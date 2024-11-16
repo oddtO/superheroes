@@ -3,6 +3,7 @@ import { superheroController } from "../controllers/superhero-controller";
 import { uploadMiddleware } from "../middleware/upload-middleware";
 import { validateBodyMiddleware } from "../middleware/validate-body-middleware";
 import { SuperheroSchema } from "../schemas/superheroSchema";
+import { UpdateSuperheroSchema } from "../schemas/updateSuperheroSchema";
 const MAX_FILES = 12;
 const router = Router();
 
@@ -13,6 +14,13 @@ router.post(
   uploadMiddleware.array("images", MAX_FILES),
   validateBodyMiddleware(SuperheroSchema),
   superheroController.addSuperhero,
+);
+
+router.patch(
+  "/superhero/:id",
+  uploadMiddleware.array("images", MAX_FILES),
+  validateBodyMiddleware(UpdateSuperheroSchema),
+  superheroController.updateSuperhero,
 );
 
 export default router;

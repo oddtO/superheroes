@@ -108,6 +108,6 @@
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
   },
 
-  "files": ["node_modules/jest-extended/types/index.d.ts"],
-  "include": ["node_modules/jest-extended/types/index.d.ts"]
+  // "files": ["node_modules/jest-extended/types/index.d.ts"],
+  // "include": ["node_modules/jest-extended/types/index.d.ts"]
 }

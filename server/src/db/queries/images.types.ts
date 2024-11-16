@@ -20,3 +20,18 @@ export interface IAddSuperheroImagesQuery {
   result: IAddSuperheroImagesResult;
 }
 
+/** 'RemoveImages' parameters type */
+export interface IRemoveImagesParams {
+  imgIds: readonly (NumberOrString | null | void)[];
+  superhero_id?: NumberOrString | null | void;
+}
+
+/** 'RemoveImages' return type */
+export type IRemoveImagesResult = void;
+
+/** 'RemoveImages' query type */
+export interface IRemoveImagesQuery {
+  params: IRemoveImagesParams;
+  result: IRemoveImagesResult;
+}
+

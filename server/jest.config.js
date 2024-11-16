@@ -5,6 +5,9 @@ module.exports = {
     "^.+.tsx?$": ["ts-jest", {}],
   },
 
+  maxWorkers: 1,
+
+  resetMocks: true,
   testMatch: ["**/?(*.)+(spec|test).ts"],
-  setupFilesAfterEnv: ["jest-extended/all"],
+  setupFilesAfterEnv: ["./src/setupTests.ts"],
 };

@@ -1,8 +1,9 @@
 import type { Request, Response, NextFunction } from "express";
 import { superheroService } from "../services/superhero-service";
 import { ISuperhero } from "../schemas/superheroSchema";
-import { IFile } from "../types/types";
+import { IFile, INewSuperhero, IUpdatedSuperhero } from "../types/types";
 import { createDataUrl } from "../utils/createDataUrl";
+import { UpdateSuperhero } from "../schemas/updateSuperheroSchema";
 class SuperheroController {
   async getSuperheroes(req: Request, res: Response, next: NextFunction) {
     try {
@@ -47,12 +48,50 @@ class SuperheroController {
           createDataUrl(file.mimetype, file.buffer.toString("base64")),
         );
       });
-      const newSuperhero = await superheroService.addSuperhero({
+      const newSuperheroParam = {
         ...req.body,
         ...imagesInfo,
-      });
+      } as INewSuperhero;
+      const newSuperhero =
+        await superheroService.addSuperhero(newSuperheroParam);
 
       res.status(201).json(newSuperhero);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async updateSuperhero(
+    req: Request<{ id: string }, object, UpdateSuperhero>,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      const { id } = req.params;
+      const files = req.files as IFile[];
+
+      const imagesInfo = {
+        image_filenames: [] as string[],
+        image_types: [] as string[],
+        images_b64: [] as string[],
+      };
+      files.forEach((file) => {
+        imagesInfo.image_filenames.push(file.originalname);
+        imagesInfo.image_types.push(file.mimetype);
+        imagesInfo.images_b64.push(
+          createDataUrl(file.mimetype, file.buffer.toString("base64")),
+        );
+      });
+      const newSuperheroParam = {
+        ...req.body,
+        ...imagesInfo,
+        id,
+      } as IUpdatedSuperhero;
+
+      const newSuperhero =
+        await superheroService.updateSuperhero(newSuperheroParam);
+
+      res.json(newSuperhero);
     } catch (error) {
       next(error);
     }

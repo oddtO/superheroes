@@ -1,8 +1,9 @@
 import { sql } from "@pgtyped/runtime";
 import pool from "../pool";
-import { IAddSuperheroImagesQuery } from "./images.types";
+import { IAddSuperheroImagesQuery, IRemoveImagesQuery } from "./images.types";
 import { IGetSuperheroAllDataResult } from "./superheroes.types";
-import { INewSuperhero } from "../../types/types";
+import { INewSuperhero, IUpdatedSuperhero } from "../../types/types";
+import { ApiError } from "../../exceptions/api-error";
 class Images {
   async addImagesToSuperhero(
     superheroId: string,
@@ -35,6 +36,26 @@ class Images {
         pool,
       );
     }
+  }
+
+  async removeImagesFromSuperhero(
+    superheroId: string,
+    superheroData: IUpdatedSuperhero,
+  ) {
+    if (!superheroData.idsImageToDelete) return;
+    if (typeof superheroData.idsImageToDelete === "string") {
+      superheroData.idsImageToDelete = [superheroData.idsImageToDelete];
+    }
+    const removeImages = sql<IRemoveImagesQuery>`
+      DELETE FROM images_superheroes
+      WHERE
+        superhero_id = $superhero_id AND id IN $$imgIds
+    `;
+
+    const removedImages = await removeImages.run(
+      { superhero_id: superheroId, imgIds: superheroData.idsImageToDelete },
+      pool,
+    );
   }
 }
 export const imagesDb = new Images();

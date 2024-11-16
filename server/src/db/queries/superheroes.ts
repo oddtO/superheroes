@@ -5,8 +5,10 @@ import {
   IGetSuperheroAllDataQuery,
   IGetSuperheroAllDataResult,
   IGetSuperheroesQuery,
+  IUpdateSuperheroQuery,
+  IUpdateSuperheroResult,
 } from "./superheroes.types";
-import { INewSuperhero } from "../../types/types";
+import { INewSuperhero, IUpdatedSuperhero } from "../../types/types";
 import { createDataUrl } from "../../utils/createDataUrl";
 import { imagesDb } from "./images";
 class Superheroes {
@@ -72,7 +74,7 @@ class Superheroes {
     }
   }
   async addSuperhero(superheroData: INewSuperhero) {
-    pool.query("BEGIN");
+    await pool.query("BEGIN");
     const addSuperheroMainTable = sql<IAddSuperheroMainTableQuery>`
       INSERT INTO
         superheroes (
@@ -107,9 +109,55 @@ class Superheroes {
     const newSuperhero = newSuperheroWrapper[0];
     await imagesDb.addImagesToSuperhero(newSuperhero.id, superheroData);
 
-    pool.query("COMMIT");
+    await pool.query("COMMIT");
     const newSuperheroAllData = await this.getSuperheroAllData(newSuperhero.id);
     return newSuperheroAllData;
+  }
+  async updateSuperhero(superheroData: IUpdatedSuperhero) {
+    await pool.query("BEGIN");
+    const updateSuperhero = sql<IUpdateSuperheroQuery>`
+      UPDATE superheroes
+      SET
+        nickname = $nickname,
+        real_name = $real_name,
+        origin_description = $origin_description,
+        superpowers = $superpowers,
+        catch_phrase = $catch_phrase
+      WHERE
+        id = $id
+      RETURNING
+        *;
+    `;
+    const updatedSuperheroWrapper = await updateSuperhero.run(
+      {
+        id: superheroData.id,
+        nickname: superheroData.nickname,
+        real_name: superheroData.real_name,
+        origin_description: superheroData.origin_description,
+        superpowers: superheroData.superpowers,
+        catch_phrase: superheroData.catch_phrase,
+      },
+      pool,
+    );
+    const updatedSuperhero: IUpdateSuperheroResult | undefined =
+      updatedSuperheroWrapper[0];
+
+    if (!updatedSuperhero) {
+      return null;
+    }
+    await imagesDb.removeImagesFromSuperhero(
+      updatedSuperhero.id,
+      superheroData,
+    );
+
+    await imagesDb.addImagesToSuperhero(updatedSuperhero.id, superheroData);
+
+    const newFullSuperhero = (await this.getSuperheroAllData(
+      updatedSuperhero.id,
+    )) as Exclude<IGetSuperheroAllDataResult, null>;
+
+    await pool.query("COMMIT");
+    return newFullSuperhero;
   }
 }
 

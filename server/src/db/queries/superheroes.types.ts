@@ -76,3 +76,29 @@ export interface IAddSuperheroMainTableQuery {
   result: IAddSuperheroMainTableResult;
 }
 
+/** 'UpdateSuperhero' parameters type */
+export interface IUpdateSuperheroParams {
+  catch_phrase?: string | null | void;
+  id?: NumberOrString | null | void;
+  nickname?: string | null | void;
+  origin_description?: string | null | void;
+  real_name?: string | null | void;
+  superpowers?: string | null | void;
+}
+
+/** 'UpdateSuperhero' return type */
+export interface IUpdateSuperheroResult {
+  catch_phrase: string;
+  id: string;
+  nickname: string;
+  origin_description: string;
+  real_name: string;
+  superpowers: string;
+}
+
+/** 'UpdateSuperhero' query type */
+export interface IUpdateSuperheroQuery {
+  params: IUpdateSuperheroParams;
+  result: IUpdateSuperheroResult;
+}
+

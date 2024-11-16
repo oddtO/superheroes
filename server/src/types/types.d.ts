@@ -1,6 +1,10 @@
-import type { IGetSuperheroAllDataResult } from "../db/queries/superheroes.types"
-export type INewSuperhero = Omit<Omit<IGetSuperheroAllDataResult, "image_ids">, "id">
-
+import type { IGetSuperheroAllDataResult } from "../db/queries/superheroes.types";
+import type { UpdateSuperhero } from "../schemas/updateSuperheroSchema";
+export type INewSuperhero = Omit<
+  Omit<IGetSuperheroAllDataResult, "image_ids">,
+  "id"
+>;
+export type IUpdatedSuperhero = INewSuperhero & UpdateSuperhero & {id: string};
 
 interface IFile {
   fieldname: string;
@@ -10,4 +14,3 @@ interface IFile {
   buffer: Buffer;
   size: number;
 }
-
