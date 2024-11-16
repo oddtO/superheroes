@@ -1,0 +1,13 @@
+.superheroItem {
+  width: 15em;
+  height: 10em;
+  display: flex;
+  align-items: center;
+
+  flex-direction: column;
+  /* border: 1px solid #787878; */
+  box-shadow: 6px 6px 10px #787878;
+
+  border-radius: 0.5em;
+  padding: 0.5em;
+}

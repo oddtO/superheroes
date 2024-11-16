@@ -1,6 +1,7 @@
 import { $api } from "../api";
+import type { ISuperheroPreviewResponse } from "../types/responses/superhero";
 export function getSuperheroes() {
-  return $api.get("/superheroes").then((res) => {
+  return $api.get<ISuperheroPreviewResponse>("/superheroes").then((res) => {
     return res.data;
   });
 }
