@@ -4,3 +4,9 @@ export function getSuperheroes() {
     return res.data;
   });
 }
+
+export function getSuperheroById(id: string) {
+  return $api.get(`/superhero/${id}`).then((res) => {
+    return res.data;
+  });
+}

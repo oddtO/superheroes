@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import styles from "./App.module.scss";
-import { getSuperheroes } from "./lib/get-superheroes";
+import { getSuperheroes, getSuperheroById } from "./lib/get-superheroes";
 function App() {
   useEffect(() => {
     async function getSuperheroesWrapper() {
@@ -13,6 +13,20 @@ function App() {
     }
 
     getSuperheroesWrapper();
+  });
+  useEffect(() => {
+    async function getSuperheroByIdWrapper(id: string) {
+      try {
+        const superhero = await getSuperheroById(id);
+        console.log(superhero);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    getSuperheroByIdWrapper("1");
+    getSuperheroByIdWrapper("2");
+    getSuperheroByIdWrapper("3");
   });
   return (
     <>
