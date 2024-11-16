@@ -2,8 +2,11 @@ import { Router } from "express";
 import { superheroController } from "../controllers/superhero-controller";
 import { uploadMiddleware } from "../middleware/upload-middleware";
 import { validateBodyMiddleware } from "../middleware/validate-body-middleware";
+import { validateParamsMiddleware } from "../middleware/validate-params-middleware";
 import { SuperheroSchema } from "../schemas/superheroSchema";
 import { UpdateSuperheroSchema } from "../schemas/updateSuperheroSchema";
+import { PageParamsSchema } from "../schemas/page-params-schema";
+import { pagedDataController } from "../controllers/paged-data-controller";
 const MAX_FILES = 12;
 const router = Router();
 
@@ -25,4 +28,10 @@ router.patch(
 
 router.delete("/superhero/:id", superheroController.deleteSuperhero);
 
+router.get("/paged", pagedDataController.getPageCount);
+router.get(
+  "/paged/:page",
+  validateParamsMiddleware(PageParamsSchema),
+  pagedDataController.getPagedSuperheroes,
+);
 export default router;

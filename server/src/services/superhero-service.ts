@@ -35,6 +35,20 @@ class SuperheroService {
     }
     return deletedSuperhero;
   }
+  async getPageCount() {
+    const count = await superheroesDb.getPageCount();
+    return count;
+  }
+
+  async getSuperheroesByPage(page: number) {
+    const superheroes = await superheroesDb.getByPages(page);
+
+    if (!superheroes) {
+      throw ApiError.NotFoundError();
+    }
+
+    return superheroes;
+  }
 }
 
 export const superheroService = new SuperheroService();

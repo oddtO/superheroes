@@ -123,3 +123,43 @@ export interface IDeleteSuperheroQuery {
   result: IDeleteSuperheroResult;
 }
 
+/** 'CountSuperheroes' parameters type */
+export type ICountSuperheroesParams = void;
+
+/** 'CountSuperheroes' return type */
+export interface ICountSuperheroesResult {
+  count: string | null;
+}
+
+/** 'CountSuperheroes' query type */
+export interface ICountSuperheroesQuery {
+  params: ICountSuperheroesParams;
+  result: ICountSuperheroesResult;
+}
+
+/** 'GetSuperheroesByPage' parameters type */
+export interface IGetSuperheroesByPageParams {
+  page?: number | null | void;
+  page_size?: number | null | void;
+}
+
+/** 'GetSuperheroesByPage' return type */
+export interface IGetSuperheroesByPageResult {
+  catch_phrase: string;
+  first_image: string;
+  id: string;
+  image_id: string;
+  mime_type: string;
+  nickname: string;
+  origin_description: string;
+  original_filename: string;
+  real_name: string;
+  superpowers: string;
+}
+
+/** 'GetSuperheroesByPage' query type */
+export interface IGetSuperheroesByPageQuery {
+  params: IGetSuperheroesByPageParams;
+  result: IGetSuperheroesByPageResult;
+}
+

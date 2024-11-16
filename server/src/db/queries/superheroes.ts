@@ -2,9 +2,11 @@ import pool from "../pool";
 import { sql } from "@pgtyped/runtime";
 import {
   IAddSuperheroMainTableQuery,
+  ICountSuperheroesQuery,
   IDeleteSuperheroQuery,
   IGetSuperheroAllDataQuery,
   IGetSuperheroAllDataResult,
+  IGetSuperheroesByPageQuery,
   IGetSuperheroesQuery,
   IUpdateSuperheroQuery,
   IUpdateSuperheroResult,
@@ -12,6 +14,7 @@ import {
 import { INewSuperhero, IUpdatedSuperhero } from "../../types/types";
 import { createDataUrl } from "../../utils/createDataUrl";
 import { imagesDb } from "./images";
+import { PAGE_SIZE } from "../../globals";
 class Superheroes {
   getSuperheroesWithTheirFirstImage() {
     const getSuperheroes = sql<IGetSuperheroesQuery>`
@@ -174,6 +177,54 @@ class Superheroes {
       return null;
     }
     return deletedSuperhero;
+  }
+  async getPageCount() {
+    const countSuperheroes = sql<ICountSuperheroesQuery>`
+      SELECT
+        COUNT(*)
+      FROM
+        superheroes;
+    `;
+
+    const count = await countSuperheroes.run(undefined, pool);
+    const countNumType = count[0].count === null ? 1 : +count[0].count;
+    return Math.floor(countNumType / PAGE_SIZE);
+  }
+
+  async getByPages(page: number) {
+    const getSuperheroesByPage = sql<IGetSuperheroesByPageQuery>`
+      SELECT
+        s.id,
+        s.nickname,
+        s.real_name,
+        s.origin_description,
+        s.superpowers,
+        s.catch_phrase,
+        i.image_data AS first_image,
+        i.mime_type,
+        i.original_filename,
+        i.id AS image_id
+      FROM
+        superheroes s
+        LEFT JOIN (
+          SELECT DISTINCT
+            ON (superhero_id) *
+          FROM
+            images_superheroes
+          ORDER BY
+            superhero_id
+        ) i ON s.id = i.superhero_id
+      LIMIT $page_size OFFSET $page_size * ($page - 1);
+    `;
+
+    const superheroes = await getSuperheroesByPage.run(
+      { page_size: PAGE_SIZE, page },
+      pool,
+    );
+    if (superheroes.length === 0) {
+      return null;
+    }
+    return superheroes;
   }
 }
 

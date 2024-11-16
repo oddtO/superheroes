@@ -2,12 +2,12 @@ import { z } from "zod";
 import type { ZodRawShape } from "zod";
 import { Request, Response, NextFunction } from "express";
 import { ApiError } from "../exceptions/api-error";
-export function validateBodyMiddleware<T extends ZodRawShape>(
+export function validateParamsMiddleware<T extends ZodRawShape>(
   schema: z.ZodObject<T>,
 ) {
   return (req: Request, res: Response, next: NextFunction) => {
     try {
-      schema.parse(req.body);
+      schema.parse(req.params);
       next();
     } catch (err) {
       if (err instanceof z.ZodError) {
