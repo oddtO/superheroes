@@ -9,6 +9,7 @@ export function getSuperheroes() {
 
 export function getSuperheroById(id: string) {
   return $api.get<ISuperheroDetails>(`/superhero/${id}`).then((res) => {
+    console.log("res.data, ", res.data);
     return res.data;
   });
 }

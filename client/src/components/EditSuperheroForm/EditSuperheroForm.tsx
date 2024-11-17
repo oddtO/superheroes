@@ -1,6 +1,10 @@
 import { SuperheroForm } from "../SuperheroForm/SuperheroForm";
 
-import { SuperheroSchema } from "../../schemas/SuperheroSchema";
+import {
+  SuperheroSchema,
+  UpdateSuperheroFormData,
+  UpdateSuperheroSchema,
+} from "../../schemas/SuperheroSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { SuperheroFormData } from "../../schemas/SuperheroSchema";
@@ -34,8 +38,8 @@ export function EditSuperheroForm() {
     reset,
     setValue,
     getValues,
-  } = useForm<SuperheroFormData>({
-    resolver: zodResolver(SuperheroSchema),
+  } = useForm<UpdateSuperheroFormData>({
+    resolver: zodResolver(UpdateSuperheroSchema),
   });
 
   useEffect(() => {
@@ -52,6 +56,18 @@ export function EditSuperheroForm() {
       handleError(error, setError);
     }
   };
+
+  function serverSideRemove(index: number) {
+    const idToRemove = superhero?.image_ids?.[index];
+    if (!idToRemove) return;
+    const currentIdsToRemove = getValues("idsImageToDelete");
+
+    if (currentIdsToRemove === undefined) {
+      setValue("idsImageToDelete", [idToRemove]);
+    } else {
+      setValue("idsImageToDelete", [...currentIdsToRemove, idToRemove]);
+    }
+  }
   return (
     <>
       <SuperheroForm
@@ -59,6 +75,15 @@ export function EditSuperheroForm() {
         handleSubmit={handleSubmit}
         onSubmit={onSubmit}
         errors={errors}
+      />
+      <ImageListEditor
+        register={register}
+        getValues={getValues}
+        setValue={setValue}
+        //@ts-expect-error: ignore file typing
+        error={errors.images}
+        superhero={superhero}
+        serverSideRemove={serverSideRemove}
       />
     </>
   );

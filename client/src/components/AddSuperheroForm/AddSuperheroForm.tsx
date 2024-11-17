@@ -19,7 +19,6 @@ export function AddSuperheroForm() {
 
   const onSubmit = async (data: SuperheroFormData) => {
     try {
-      console.log("DATA: ", data);
       await addSuperhero(data);
     } catch (error) {
       handleError(error, setError);

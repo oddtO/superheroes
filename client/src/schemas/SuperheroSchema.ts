@@ -7,14 +7,12 @@ export const SuperheroSchema = z.object({
   superpowers: z.string().min(1, { message: "required" }),
   catch_phrase: z.string().min(1, { message: "required" }),
   images: z.array(z.instanceof(File)).or(z.undefined()).optional(),
-  /* .refine(
-      (files) => files?.[0]?.size <= MAX_FILE_SIZE,
-      `Max image size is 2MB.`,
-    )
-    .refine(kk
-      (files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
-      "Only .jpg, .jpeg, .png and .webp formats are supported.",
-    ), */
 });
 
 export type SuperheroFormData = z.infer<typeof SuperheroSchema>;
+
+export const UpdateSuperheroSchema = SuperheroSchema.extend({
+  idsImageToDelete: z.array(z.string()).or(z.undefined()).optional(),
+});
+
+export type UpdateSuperheroFormData = z.infer<typeof UpdateSuperheroSchema>;
