@@ -1,5 +1,5 @@
 import { IFieldErrors } from "../types";
-type SuperheroFormError =
+export type SuperheroFormError =
   | {
       message: "Validation error";
       errors: IFieldErrors;
