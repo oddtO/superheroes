@@ -11,4 +11,8 @@ export interface ISuperheroPreview {
   image_id: string;
 }
 
+
+
+
+
 export type ISuperheroPreviewResponse = ISuperheroPreview[];

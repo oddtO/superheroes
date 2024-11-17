@@ -1,7 +1,8 @@
 import { $api } from "../api";
 
 import type { ISuperheroPreviewResponse } from "../types/responses/superhero";
-export function addSuperhero(data: FormData) {
+import type { SuperheroFormData } from "../types/types";
+export function addSuperhero(data: SuperheroFormData) {
   return $api
     .post<ISuperheroPreviewResponse>("/superheroes", data, {
       headers: {
