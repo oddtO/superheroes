@@ -7,6 +7,7 @@ import { SuperheroFormData } from "../../schemas/SuperheroSchema";
 import { addSuperhero } from "../../lib/add-superhero";
 import { handleError } from "../../utils/handleError";
 import { ImageListEditor } from "../ImageListEditor/ImageListEditor";
+import { useNavigate } from "react-router-dom";
 export function AddSuperheroForm() {
   const {
     register,
@@ -17,9 +18,11 @@ export function AddSuperheroForm() {
     setValue,
   } = useForm<SuperheroFormData>({ resolver: zodResolver(SuperheroSchema) });
 
+  const navigate = useNavigate();
   const onSubmit = async (data: SuperheroFormData) => {
     try {
       await addSuperhero(data);
+      navigate(-1);
     } catch (error) {
       handleError(error, setError);
     }

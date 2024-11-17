@@ -13,6 +13,8 @@ import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { handleError } from "../../utils/handleError";
 import { ImageListEditor } from "../ImageListEditor/ImageListEditor";
+import { DeleteButton } from "../deleteButton/deleteButton";
+import { useNavigate } from "react-router-dom";
 export function EditSuperheroForm() {
   const { id: superheroId } = useParams();
 
@@ -22,6 +24,7 @@ export function EditSuperheroForm() {
 
   if (!isNumber) throw new Error("provided id is not a number");
 
+  const navigate = useNavigate();
   const {
     dataToLoad: superhero,
     isLoading,
@@ -51,6 +54,7 @@ export function EditSuperheroForm() {
   const onSubmit = async (data: SuperheroFormData) => {
     try {
       await updateSuperhero(data, superheroId);
+      navigate(-1);
     } catch (error) {
       handleError(error, setError);
     }
@@ -79,11 +83,10 @@ export function EditSuperheroForm() {
         register={register}
         getValues={getValues}
         setValue={setValue}
-        //@ts-expect-error: ignore file typing
-        error={errors.images}
         superhero={superhero}
         serverSideRemove={serverSideRemove}
       />
+      <DeleteButton id={superheroId} />
     </>
   );
 }

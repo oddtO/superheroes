@@ -16,7 +16,6 @@ export function ImageListEditor({
   getValues: UseFormGetValues<SuperheroFormData>;
   setValue: UseFormSetValue<SuperheroFormData>;
   register: UseFormRegister<SuperheroFormData>;
-  error: FieldError | undefined;
   superhero?: ISuperheroDetails;
   serverSideRemove?: (index: number) => void;
 }) {
