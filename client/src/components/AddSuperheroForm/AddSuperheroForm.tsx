@@ -37,11 +37,8 @@ export function AddSuperheroForm() {
       />
 
       <ImageListEditor
-        register={register}
         getValues={getValues}
         setValue={setValue}
-        //@ts-expect-error: ignore file typing
-        error={errors.images}
       />
     </>
   );

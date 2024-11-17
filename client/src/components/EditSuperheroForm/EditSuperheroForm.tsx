@@ -80,7 +80,6 @@ export function EditSuperheroForm() {
         errors={errors}
       />
       <ImageListEditor
-        register={register}
         getValues={getValues}
         setValue={setValue}
         superhero={superhero}
