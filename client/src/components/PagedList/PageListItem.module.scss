@@ -1,13 +1,21 @@
 .superheroItem {
-  width: 15em;
-  height: 10em;
+  width: 17em;
+  height: 13em;
   display: flex;
   align-items: center;
-
   flex-direction: column;
+  gap: 0.2em;
+
   /* border: 1px solid #787878; */
   box-shadow: 6px 6px 10px #787878;
-
   border-radius: 0.5em;
-  padding: 0.5em;
+  padding: 1em;
+}
+
+.viewMoreBtn {
+  background-color: #7878d2;
+  color: #fff;
+  border: none;
+  border-radius: 0.5em;
+  padding: 0.2em 2em;
 }

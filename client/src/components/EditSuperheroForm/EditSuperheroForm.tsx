@@ -1,7 +1,6 @@
 import { SuperheroForm } from "../SuperheroForm/SuperheroForm";
 
 import {
-  SuperheroSchema,
   UpdateSuperheroFormData,
   UpdateSuperheroSchema,
 } from "../../schemas/SuperheroSchema";

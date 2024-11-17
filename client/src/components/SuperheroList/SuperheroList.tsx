@@ -11,8 +11,7 @@ export function SuperheroList() {
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) {
-    console.log(errors);
-    return <div>Error</div>;
+    throw errors;
   }
 
   return (

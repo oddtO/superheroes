@@ -1,7 +1,6 @@
 import { $api } from "../api";
 
 import type {
-  SuperheroFormData,
   UpdateSuperheroFormData,
 } from "../schemas/SuperheroSchema";
 import type { ISuperheroDetails } from "../types/responses/superhero";

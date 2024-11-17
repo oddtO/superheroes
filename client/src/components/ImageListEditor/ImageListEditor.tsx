@@ -1,17 +1,13 @@
 import { FieldError, UseFormRegister } from "react-hook-form";
-import FormField from "../FormField/FormField";
 import { ImageList } from "../ImageList/ImageList";
 import { SuperheroFormData } from "../../schemas/SuperheroSchema";
 import { useCallback, useMemo } from "react";
 import type { UseFormGetValues, UseFormSetValue } from "react-hook-form";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { getImgDataUrlsAndNames } from "../../utils/convertImageFilesToDataURL";
 import { ImageSchema, ImageValidationError } from "../../schemas/ImageSchema";
-import { ZodError } from "zod";
 import { ISuperheroDetails } from "../../types/responses/superhero";
 export function ImageListEditor({
-  register,
-  error,
   getValues,
   setValue,
   superhero,
