@@ -21,13 +21,14 @@ export function Button() {
         formData.append("images", files[i]);
       }
     }
-    console.log("submit");
+    console.log("submit: ", formData);
+    //@ts-expect-error: this is only debug function
     addSuperhero(formData);
   }
   return (
     <div>
       <button onClick={onSubmit}>Add Superhero</button>
-      <input type="file" name="images" id="images" multiple={true} ref={ref} />
+      <input type="file" name="images" id="images" ref={ref} />
     </div>
   );
 }

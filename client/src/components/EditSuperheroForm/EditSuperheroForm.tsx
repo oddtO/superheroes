@@ -3,12 +3,13 @@ import { SuperheroForm } from "../SuperheroForm/SuperheroForm";
 import { SuperheroSchema } from "../../schemas/SuperheroSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { SuperheroFormData } from "../../types/types";
+import { SuperheroFormData } from "../../schemas/SuperheroSchema";
 import { updateSuperhero } from "../../lib/updateSuperhero";
 import { useSuperheroDetailed } from "../../hooks/useSuperheroDetailed";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { handleError } from "../../utils/handleError";
+import { ImageListEditor } from "../ImageListEditor/ImageListEditor";
 export function EditSuperheroForm() {
   const { id: superheroId } = useParams();
 
@@ -22,6 +23,7 @@ export function EditSuperheroForm() {
     dataToLoad: superhero,
     isLoading,
     isError,
+    errors: fetchErrors,
   } = useSuperheroDetailed(superheroId);
 
   const {
@@ -30,6 +32,8 @@ export function EditSuperheroForm() {
     formState: { errors },
     setError,
     reset,
+    setValue,
+    getValues,
   } = useForm<SuperheroFormData>({
     resolver: zodResolver(SuperheroSchema),
   });
@@ -40,7 +44,7 @@ export function EditSuperheroForm() {
   }, [reset, superhero]);
 
   if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error</div>;
+  if (isError) throw fetchErrors;
   const onSubmit = async (data: SuperheroFormData) => {
     try {
       await updateSuperhero(data, superheroId);
@@ -49,11 +53,13 @@ export function EditSuperheroForm() {
     }
   };
   return (
-    <SuperheroForm
-      register={register}
-      handleSubmit={handleSubmit}
-      onSubmit={onSubmit}
-      errors={errors}
-    />
+    <>
+      <SuperheroForm
+        register={register}
+        handleSubmit={handleSubmit}
+        onSubmit={onSubmit}
+        errors={errors}
+      />
+    </>
   );
 }

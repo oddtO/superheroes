@@ -1,9 +1,9 @@
-import { SuperheroFormFieldProps } from "../../types/types";
+import { SuperheroFormFieldProps } from "./types";
 
 function FormField({
   type,
-  placeholder,
-  labelText = placeholder,
+  labelText,
+  placeholder = labelText,
   name,
   register,
   error,
@@ -17,7 +17,7 @@ function FormField({
         id={name}
         {...register(name)}
       />
-      {error && <span className="error-message">{error.message}</span>}
+      {error && <span>{error.message}</span>}
     </>
   );
 }

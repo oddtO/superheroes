@@ -1,6 +1,6 @@
 import { $api } from "../api";
 
-import type { SuperheroFormData } from "../types/types";
+import type { SuperheroFormData } from "../schemas/SuperheroSchema";
 import type { ISuperheroDetails } from "../types/responses/superhero";
 export function updateSuperhero(data: SuperheroFormData, id: string) {
   return $api

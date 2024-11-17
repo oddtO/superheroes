@@ -3,7 +3,7 @@ import { AxiosError, type AxiosResponse } from "axios";
 import type { SuperheroFormError } from "../types/responses/errors";
 import { SuperheroValidFieldNames } from "../types/types";
 import { UseFormSetError } from "react-hook-form";
-import { SuperheroFormData } from "../types/types";
+import { SuperheroFormData } from "../schemas/SuperheroSchema";
 export function handleError<ErrorType extends SuperheroFormError>(
   error: unknown,
   setError: UseFormSetError<SuperheroFormData>,
