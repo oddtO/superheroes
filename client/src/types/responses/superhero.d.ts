@@ -15,6 +15,7 @@ export interface ISuperheroPreview extends ISuperheroText {
 
 export type ISuperheroPreviewResponse = ISuperheroPreview[];
 
+
 export interface ISuperheroDetails extends ISuperheroText {
   image_ids: string[];
   images_b64: string[];

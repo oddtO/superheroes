@@ -21,7 +21,6 @@ export function Button() {
         formData.append("images", files[i]);
       }
     }
-    console.log("submit: ", formData);
     //@ts-expect-error: this is only debug function
     addSuperhero(formData);
   }

@@ -10,6 +10,7 @@ type ReturnType<DataType> =
     }
   | {
       dataToLoad: DataType;
+
       isLoading: false;
       isError: false;
       errors: null;
@@ -56,7 +57,7 @@ export function useData<DataType>(loadData: () => Promise<DataType>) {
     }
 
     fetchData();
-  }, []);
+  }, [loadData]);
 
   return loadingState;
 }

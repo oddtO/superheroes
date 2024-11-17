@@ -7,9 +7,21 @@ export function getSuperheroes() {
   });
 }
 
+export function getPageCount() {
+  return $api.get("/paged").then((res) => {
+    return res.data.pages;
+  });
+}
+export function getSuperheroesByPage(page: number) {
+  return $api
+    .get<ISuperheroPreviewResponse>(`/paged/${page}`)
+    .then((res) => {
+      return res.data;
+    });
+}
+
 export function getSuperheroById(id: string) {
   return $api.get<ISuperheroDetails>(`/superhero/${id}`).then((res) => {
-    console.log("res.data, ", res.data);
     return res.data;
   });
 }

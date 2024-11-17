@@ -3,7 +3,7 @@ import { ImageList } from "../ImageList/ImageList";
 import { SuperheroFormData } from "../../schemas/SuperheroSchema";
 import { useCallback, useMemo } from "react";
 import type { UseFormGetValues, UseFormSetValue } from "react-hook-form";
-import {  useState } from "react";
+import { useState } from "react";
 import { getImgDataUrlsAndNames } from "../../utils/convertImageFilesToDataURL";
 import { ImageSchema, ImageValidationError } from "../../schemas/ImageSchema";
 import { ISuperheroDetails } from "../../types/responses/superhero";
@@ -65,7 +65,6 @@ export function ImageListEditor({
     const file = e.target.files?.[0];
     if (!file) return;
 
-    e.target.files = null;
     e.target.value = "";
     const validationResult = ImageSchema.safeParse({ file });
     if (validationResult.success) {
@@ -78,7 +77,6 @@ export function ImageListEditor({
 
   async function removeImage(name: string) {
     const images = getValues("images");
-    console.log(images);
     if (images === undefined) return;
     const newImgs = images.filter((image) => image.name !== name);
 
@@ -111,11 +109,10 @@ export function ImageListEditor({
   }
 
   const printableImageError = imageErrors?.flatten().fieldErrors.file?.[0];
-  console.log("B64: ", superhero?.images_b64);
-  console.log("serverSideImgDataUrls: ", serverSideImgDataUrls.length);
   return (
     <>
-      <input type="file" name="new_file" onChange={addOnChange} />
+      <label htmlFor="new_file">Add image</label>
+      <input type="file" name="new_file" id="new_file" onChange={addOnChange} />
       <span>{printableImageError ? printableImageError : null}</span>
       {imgDataUrls.length > 0 ? (
         <ImageList

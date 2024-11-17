@@ -1,13 +1,17 @@
 import { PagedList } from "../PagedList/PagedList";
-import { useSuperheroPreviews } from "../../hooks/useSuperheroPreviews";
+import { useSuperheroPreviewsPaged } from "../../hooks/useSuperheroPreviews";
 import { Button } from "../Button/Button";
-export function SuperheroList() {
+import { useParams } from "react-router-dom";
+import { PageLinks } from "./PageLinks";
+export function SuperheroListPaged() {
+  const { page: pageParam } = useParams();
+  const currentPage = pageParam ?? 1;
   const {
     dataToLoad: superheroPreviews,
     isLoading,
     isError,
     errors,
-  } = useSuperheroPreviews();
+  } = useSuperheroPreviewsPaged(+currentPage);
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) {
@@ -18,6 +22,7 @@ export function SuperheroList() {
     <>
       <Button />
       <PagedList data={superheroPreviews} />
+      <PageLinks />
     </>
   );
 }

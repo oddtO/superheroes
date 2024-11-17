@@ -12,7 +12,9 @@ export function RemovableImage({
   const name = alt;
   return (
     <div className={styles.imageContainer}>
-      <button onClick={() => removeImage(name)}>X</button>
+      <button aria-label="Remove image" onClick={() => removeImage(name)}>
+        X
+      </button>
       <SuperheroImage src={src} alt={alt} />
     </div>
   );
