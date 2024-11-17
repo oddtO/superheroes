@@ -10,7 +10,7 @@ import {
 import path from "path";
 import { getAllSuperheroData } from "../utils/get-all-superhero-data";
 
-describe("Test app superhero deletion", () => {
+describe("(Deletion) superheroes app", () => {
   beforeEach(async () => {
     await request(app)
       .post("/api/superheroes")

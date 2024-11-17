@@ -8,7 +8,7 @@ import {
 } from "../mocks/superhero";
 import path from "path";
 
-describe("pagination", () => {
+describe("(Pagination) superheroes app", () => {
   beforeEach(async () => {
     for (let i = 0; i < 30; i++) {
       await request(app)

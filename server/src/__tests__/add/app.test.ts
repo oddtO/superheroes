@@ -17,7 +17,7 @@ beforeEach(commonBeforeEach);
 afterEach(commonAfterEach);
 afterAll(commonAfterAll); */
 
-describe("Test application database", () => {
+describe("(Adding) superheroes app", () => {
   test("should be empty", (done) => {
     request(app)
       .get("/api/superheroes")
@@ -33,8 +33,6 @@ describe("Test application database", () => {
         .send({
           nickname: "Spiderman",
         })
-        .set("Content-Type", "application/json")
-        .set("Accept", "application/json");
 
       expect(results.status).toBe(400);
       expect(results.body).toMatchObject({
@@ -42,10 +40,10 @@ describe("Test application database", () => {
       });
       const errors = results.body.errors;
       expect(Object.keys(errors).length).toBe(4);
-      expect(errors["catch_phrase"][0]).toMatch(/required/);
-      expect(errors["origin_description"][0]).toMatch(/required/);
-      expect(errors["real_name"][0]).toMatch(/required/);
-      expect(errors["superpowers"][0]).toMatch(/required/);
+      expect(errors["catch_phrase"][0]).toMatch(/required/i);
+      expect(errors["origin_description"][0]).toMatch(/required/i);
+      expect(errors["real_name"][0]).toMatch(/required/i);
+      expect(errors["superpowers"][0]).toMatch(/required/i);
     });
   });
   test("should require all fields for hero (case 2)", async () => {
@@ -57,8 +55,6 @@ describe("Test application database", () => {
 
         real_name: "Emily Grant",
       })
-      .set("Content-Type", "application/json")
-      .set("Accept", "application/json");
 
     expect(results.status).toBe(400);
     expect(results.body).toMatchObject({
@@ -66,9 +62,9 @@ describe("Test application database", () => {
     });
     const errors = results.body.errors;
     expect(Object.keys(errors).length).toBe(3);
-    expect(errors["nickname"][0]).toMatch(/required/);
-    expect(errors["catch_phrase"][0]).toMatch(/required/);
-    expect(errors["superpowers"][0]).toMatch(/required/);
+    expect(errors["nickname"][0]).toMatch(/required/i);
+    expect(errors["catch_phrase"][0]).toMatch(/required/i);
+    expect(errors["superpowers"][0]).toMatch(/required/i);
   });
 
   test("should add a valid superhero object", async () => {
@@ -84,7 +80,6 @@ describe("Test application database", () => {
       .attach("images", path.join(filesDirName, legalFiles.png[0]))
       .attach("images", path.join(filesDirName, legalFiles.png[1]))
       .attach("images", path.join(filesDirName, legalFiles.png[2]))
-      .set("Content-Type", "application/json");
 
     expect(postResult.status).toBe(201);
     const getResults = await request(app)
@@ -106,8 +101,6 @@ describe("Test application database", () => {
       .field("origin_description", superheroText.origin_description)
       .field("catch_phrase", superheroText.catch_phrase)
       .field("superpowers", superheroText.superpowers)
-      .set("Content-Type", "application/json")
-      .set("Accept", "application/json");
 
     expect(postResult.status).toBe(201);
     const getResults = await request(app)
@@ -117,6 +110,23 @@ describe("Test application database", () => {
     const superheroes = getResults.body;
     expect(superheroes.length).toBe(1);
     expect(superheroes[0]).toMatchObject(superheroText);
+  });
+  test("should return error at lease one of fields is empty string", async () => {
+    const postResult = await request(app)
+      .post("/api/superheroes")
+      .field("nickname", "")
+      .field("real_name", superheroText.real_name)
+      .field("origin_description", superheroText.origin_description)
+      .field("catch_phrase", superheroText.catch_phrase)
+      .field("superpowers", superheroText.superpowers)
+
+    expect(postResult.status).toBe(400);
+    const getResults = await request(app)
+      .get("/api/superheroes")
+      .expect("Content-Type", /json/);
+
+    const superheroes = getResults.body;
+    expect(superheroes.length).toBe(0);
   });
   test("should reject superhero object if illegal file is supplied", async () => {
     const postResult = await request(app)
@@ -151,8 +161,6 @@ describe("Test application database", () => {
       .attach("images", path.join(filesDirName, legalFiles.png[0]))
       .attach("images", path.join(filesDirName, legalFiles.png[1]))
       .attach("images", path.join(filesDirName, legalFiles.png[2]))
-      .set("Content-Type", "application/json")
-      .set("Accept", "application/json");
 
     expect(postResult.status).toBe(201);
     const getResults = await request(app)
@@ -195,8 +203,6 @@ describe("Test application database", () => {
       .attach("images", path.join(filesDirName, legalFiles.png[0]))
       .attach("images", path.join(filesDirName, legalFiles.png[1]))
       .attach("images", path.join(filesDirName, legalFiles.png[2]))
-      .set("Content-Type", "application/json")
-      .set("Accept", "application/json");
 
     const postResultIronMan = await request(app)
       .post("/api/superheroes")
@@ -210,8 +216,6 @@ describe("Test application database", () => {
       .attach("images", path.join(filesDirName, legalFiles.png[0]))
       .attach("images", path.join(filesDirName, legalFiles.png[1]))
       .attach("images", path.join(filesDirName, legalFiles.png[2]))
-      .set("Content-Type", "application/json")
-      .set("Accept", "application/json");
 
     const spiderMan = await request(app).get("/api/superhero/1");
 

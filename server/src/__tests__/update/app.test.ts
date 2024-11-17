@@ -15,7 +15,7 @@ beforeEach(commonBeforeEach);
 afterEach(commonAfterEach);
 afterAll(commonAfterAll); */
 
-describe("Test updating requests", () => {
+describe("(Update) superheroes app", () => {
   beforeEach(async () => {
     await request(app)
       .post("/api/superheroes")
