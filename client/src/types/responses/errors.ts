@@ -1,6 +1,6 @@
 import { IFieldErrors } from "../types";
-export type AddSuperheroError =
-   {
+type SuperheroFormError =
+  | {
       message: "Validation error";
       errors: IFieldErrors;
     }
@@ -8,7 +8,12 @@ export type AddSuperheroError =
       message: string;
     };
 
+export type AddSuperheroError = SuperheroFormError;
 
-export function isValidationError(data: AddSuperheroError): data is Extract<AddSuperheroError, { message: "Validation error" }> {
+export type UpdateSuperheroError = SuperheroFormError;
+
+export function isValidationError(
+  data: SuperheroFormError,
+): data is Extract<AddSuperheroError, { message: "Validation error" }> {
   return data.message === "Validation error";
 }

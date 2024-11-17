@@ -26,7 +26,7 @@ export function SuperheroForm({
           placeholder="Bruce Wayne..."
           name="real_name"
           register={register}
-          error={errors.nickname}
+          error={errors.real_name}
         />
 
         <FormField
