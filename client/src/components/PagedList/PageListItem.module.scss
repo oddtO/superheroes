@@ -1,3 +1,5 @@
+@use "../../utils/boxShadow.scss" as *;
+
 .superheroItem {
   width: 17em;
   height: 13em;
@@ -7,9 +9,12 @@
   gap: 0.2em;
 
   /* border: 1px solid #787878; */
-  box-shadow: 6px 6px 10px #787878;
+
+  /* box-shadow: 6px 6px 10px #787878; */
+  @include custom-box-shadow;
+
   border-radius: 0.5em;
-  padding: 1em;
+  padding-bottom: 1em;
 }
 
 .viewMoreBtn {

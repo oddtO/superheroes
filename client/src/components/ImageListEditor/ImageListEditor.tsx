@@ -1,4 +1,3 @@
-import { FieldError, UseFormRegister } from "react-hook-form";
 import { ImageList } from "../ImageList/ImageList";
 import { SuperheroFormData } from "../../schemas/SuperheroSchema";
 import { useCallback, useMemo } from "react";
@@ -7,6 +6,7 @@ import { useState } from "react";
 import { getImgDataUrlsAndNames } from "../../utils/convertImageFilesToDataURL";
 import { ImageSchema, ImageValidationError } from "../../schemas/ImageSchema";
 import { ISuperheroDetails } from "../../types/responses/superhero";
+import styles from "./styles.module.scss";
 export function ImageListEditor({
   getValues,
   setValue,
@@ -111,11 +111,24 @@ export function ImageListEditor({
   const printableImageError = imageErrors?.flatten().fieldErrors.file?.[0];
   return (
     <>
-      <label htmlFor="new_file">Add image</label>
-      <input type="file" name="new_file" id="new_file" onChange={addOnChange} />
-      <span>{printableImageError ? printableImageError : null}</span>
+      <div className={styles.imgInputWrapper}>
+        <label className={styles.addImgBtnLabel} htmlFor="new_file">
+          Add image
+        </label>
+        <input
+          hidden
+          type="file"
+          name="new_file"
+          id="new_file"
+          onChange={addOnChange}
+        />
+        <span className={styles.errorText}>
+          {printableImageError ? " * " + printableImageError : null}
+        </span>
+      </div>
       {imgDataUrls.length > 0 ? (
         <ImageList
+          listTitle="You want to upload"
           srcArr={imgDataUrls}
           altArr={imgNames}
           removeImage={removeImage}
@@ -123,6 +136,7 @@ export function ImageListEditor({
       ) : null}
       {serverSideImgDataUrls.length > 0 ? (
         <ImageList
+          listTitle="Stored in the server"
           srcArr={serverSideImgDataUrls}
           altArr={serverSideImgNames}
           removeImage={removeServerSideImgWrapper}

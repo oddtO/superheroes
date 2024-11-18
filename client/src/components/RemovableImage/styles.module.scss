@@ -1,9 +1,26 @@
+@use "../../utils/boxShadow.scss" as *;
+
 .imageContainer {
   width: 15em;
   height: 10em;
+  position: relative;
+
+  @include custom-box-shadow;
 
   > button {
+    position: absolute;
+    top: -1em;
+    right: 0;
     width: 2em;
     height: 2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    > img {
+      width: 1em;
+      height: 1em;
+      display: block;
+    }
   }
 }

@@ -1,5 +1,5 @@
 import { SuperheroFormFieldProps } from "./types";
-
+import styles from "./styles.module.scss";
 function FormField({
   type,
   labelText,
@@ -9,7 +9,7 @@ function FormField({
   error,
 }: SuperheroFormFieldProps) {
   return (
-    <>
+    <div className={styles.formField}>
       <label htmlFor={name}>{labelText}: </label>
       <input
         type={type}
@@ -17,8 +17,10 @@ function FormField({
         id={name}
         {...register(name)}
       />
-      {error && <span>{error.message}</span>}
-    </>
+      {error && (
+        <span className={styles.errorText}>{" * " + error.message}</span>
+      )}
+    </div>
   );
 }
 export default FormField;

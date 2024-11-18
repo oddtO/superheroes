@@ -1,0 +1,55 @@
+@use "../../utils/boxShadow.scss" as *;
+
+.superheroForm {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  gap: 1em;
+  padding-left: 1em;
+  padding-top: 1em;
+
+  > h1 {
+    font-size: 2em;
+  }
+
+  @media screen and (width <= 60em) {
+    width: 100%;
+    padding-right: 1em;
+  }
+}
+
+@keyframes scale-down-huge-to-normal {
+  from {
+    transform: scale(25);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.submitButton {
+  position: fixed;
+  bottom: 1em;
+  right: 1em;
+  font-size: 1.5em;
+  background-color: #1eaa5a;
+  color: white;
+  border: none;
+  border-radius: 50%;
+
+  $submit-btn-size: 4em;
+
+  width: $submit-btn-size;
+  height: $submit-btn-size;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  animation: scale-down-huge-to-normal 1s ease-out;
+  animation-fill-mode: forwards;
+
+  @include custom-box-shadow;
+}

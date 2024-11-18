@@ -13,7 +13,7 @@ import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { handleError } from "../../utils/handleError";
 import { ImageListEditor } from "../ImageListEditor/ImageListEditor";
-import { DeleteButton } from "../deleteButton/deleteButton";
+import { DeleteButton } from "../DeleteButton/DeleteButton";
 import { useNavigate } from "react-router-dom";
 export function EditSuperheroForm() {
   const { id: superheroId } = useParams();
@@ -78,14 +78,15 @@ export function EditSuperheroForm() {
         handleSubmit={handleSubmit}
         onSubmit={onSubmit}
         errors={errors}
+        heading="Edit Superhero"
       />
+      <DeleteButton id={superheroId} />
       <ImageListEditor
         getValues={getValues}
         setValue={setValue}
         superhero={superhero}
         serverSideRemove={serverSideRemove}
       />
-      <DeleteButton id={superheroId} />
     </>
   );
 }

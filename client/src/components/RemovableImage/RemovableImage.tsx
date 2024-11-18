@@ -1,5 +1,6 @@
 import { SuperheroImage } from "../SuperheroImage/SuperheroImage";
 import styles from "./styles.module.scss";
+import deleteSvg from "../../assets/delete-svgrepo-com.svg";
 export function RemovableImage({
   src,
   alt,
@@ -13,7 +14,7 @@ export function RemovableImage({
   return (
     <div className={styles.imageContainer}>
       <button aria-label="Remove image" onClick={() => removeImage(name)}>
-        X
+        <img src={deleteSvg} alt="Delete" />
       </button>
       <SuperheroImage src={src} alt={alt} />
     </div>

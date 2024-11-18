@@ -1,0 +1,29 @@
+@use "../../utils/errorText.scss" as *;
+
+.formField {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.5em;
+
+  > * {
+    width: 100%;
+    height: 100%;
+    font: inherit;
+  }
+
+  > label {
+    color: #555;
+    margin-bottom: 0.3em;
+    display: block;
+    font-size: 0.8em;
+  }
+
+  > input {
+    border-radius: 1.5em;
+    padding: 0.3em 0.2em;
+  }
+}
+
+.errorText {
+  @include error-text;
+}

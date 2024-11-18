@@ -34,12 +34,10 @@ export function AddSuperheroForm() {
         handleSubmit={handleSubmit}
         onSubmit={onSubmit}
         errors={errors}
+        heading="Add Superhero"
       />
 
-      <ImageListEditor
-        getValues={getValues}
-        setValue={setValue}
-      />
+      <ImageListEditor getValues={getValues} setValue={setValue} />
     </>
   );
 }
