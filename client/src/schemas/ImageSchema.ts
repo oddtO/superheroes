@@ -1,6 +1,6 @@
 import { z } from "zod"; // Add new import
 import type { ZodError } from "zod";
-const MAX_FILE_SIZE = 2000000;
+const MAX_FILE_SIZE = 10000000;
 const ACCEPTED_IMAGE_TYPES = [
   "image/jpeg",
   "image/jpg",
