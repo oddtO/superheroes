@@ -1,6 +1,7 @@
 import { $api } from "../api";
 import type { ISuperheroPreviewResponse } from "../types/responses/superhero";
 import type { ISuperheroDetails } from "../types/responses/superhero";
+import type { PagesResponse } from "../types/responses/pages";
 export function getSuperheroes() {
   return $api.get<ISuperheroPreviewResponse>("/superheroes").then((res) => {
     return res.data;
@@ -8,7 +9,7 @@ export function getSuperheroes() {
 }
 
 export function getPageCount() {
-  return $api.get("/paged").then((res) => {
+  return $api.get<PagesResponse>("/paged").then((res) => {
     return res.data.pages;
   });
 }

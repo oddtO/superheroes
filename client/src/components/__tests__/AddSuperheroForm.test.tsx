@@ -1,10 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { waitFor } from "@testing-library/react";
-import { getSuperheroes } from "../../lib/get-superheroes";
-import { MemoryRouter } from "react-router-dom";
-import { EditSuperheroForm } from "../EditSuperheroForm/EditSuperheroForm";
-import { Routes } from "react-router-dom";
 import { routes } from "../../routes";
 import { createMemoryRouter } from "react-router-dom";
 import { RouterProvider } from "react-router-dom";

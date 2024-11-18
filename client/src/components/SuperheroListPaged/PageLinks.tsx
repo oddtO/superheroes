@@ -1,22 +1,15 @@
 import { Link } from "react-router-dom";
-import { usePageLinksCount } from "../../hooks/useSuperheroPreviews";
 import styles from "./PageLinks.module.scss";
-export function PageLinks({ currentPage }: { currentPage: number }) {
-  const {
-    dataToLoad: pageCount,
-    isLoading,
-    isError,
-    errors,
-  } = usePageLinksCount();
-
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) {
-    throw errors;
-  }
+export function PageLinks({
+  currentPage,
+  pageCount,
+}: {
+  currentPage: number;
+  pageCount: number;
+}) {
   const pageNumbersJSX = [];
   for (let i = 1; i <= pageCount; ++i) {
     const isActivePage = i === currentPage;
-    console.log("IS ACTIVE PAGE", isActivePage, i, currentPage);
     pageNumbersJSX.push(
       <li
         className={

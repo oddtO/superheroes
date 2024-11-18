@@ -1,8 +1,8 @@
-import { getSuperheroes } from "../lib/get-superheroes";
+import { getSuperheroes } from "../lib/getSuperheroes";
 import { useData } from "./loadData";
-import { getSuperheroesByPage } from "../lib/get-superheroes";
+import { getSuperheroesByPage } from "../lib/getSuperheroes";
 import { useCallback } from "react";
-import { getPageCount } from "../lib/get-superheroes";
+import { getPageCount } from "../lib/getSuperheroes";
 export function useSuperheroPreviews() {
   const loadingState = useData(getSuperheroes);
   return loadingState;

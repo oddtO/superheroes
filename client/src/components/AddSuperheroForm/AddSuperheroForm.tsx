@@ -4,7 +4,7 @@ import { SuperheroSchema } from "../../schemas/SuperheroSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { SuperheroFormData } from "../../schemas/SuperheroSchema";
-import { addSuperhero } from "../../lib/add-superhero";
+import { addSuperhero } from "../../lib/addSuperhero";
 import { handleError } from "../../utils/handleError";
 import { ImageListEditor } from "../ImageListEditor/ImageListEditor";
 import { useNavigate } from "react-router-dom";

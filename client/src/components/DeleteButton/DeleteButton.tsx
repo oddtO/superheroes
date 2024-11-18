@@ -1,4 +1,4 @@
-import { deleteSuperhero } from "../../lib/delete-superhero";
+import { deleteSuperhero } from "../../lib/deleteSuperhero";
 import { useNavigate } from "react-router-dom";
 import styles from "./styles.module.scss";
 export function DeleteButton({ id }: { id: string }) {
@@ -12,7 +12,7 @@ export function DeleteButton({ id }: { id: string }) {
         );
         if (!confirm) return;
         await deleteSuperhero(id);
-        navigate(-1);
+        navigate("/");
       }}
     >
       Delete

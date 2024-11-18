@@ -188,7 +188,7 @@ class Superheroes {
 
     const count = await countSuperheroes.run(undefined, pool);
     const countNumType = count[0].count === null ? 1 : +count[0].count;
-    return Math.floor(countNumType / PAGE_SIZE + 1);
+    return Math.ceil(countNumType / PAGE_SIZE);
   }
 
   async getByPages(page: number) {

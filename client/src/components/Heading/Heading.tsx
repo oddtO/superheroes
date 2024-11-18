@@ -8,8 +8,8 @@ export function Heading() {
           <li className={styles.homeLink}>
             <Link to="/">Home</Link>
           </li>
-          <li>
-            <Link to="new">Add New</Link>
+          <li aria-label="Add new hero" className={styles.addIcon}>
+            <Link to="new">+</Link>
           </li>
         </ul>
       </nav>

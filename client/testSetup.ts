@@ -1,6 +1,6 @@
 import { afterEach, beforeAll, afterAll } from 'vitest'
 import { cleanup } from '@testing-library/react'
-import { server } from '../mocks/server'
+import { server } from './src/mocks/server'
 import '@testing-library/jest-dom/vitest'
 
 // runs a clean after each test case (e.g. clearing jsdom)

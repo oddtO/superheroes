@@ -63,7 +63,7 @@ export const handlers = [
       },
     ]);
   }),
-  http.get("/api/paged/2", ({request}) => {
+  http.get("/api/paged/2", () => {
     return HttpResponse.json([
       {
         first_image: mockedImages.webp[0],
