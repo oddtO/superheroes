@@ -10,7 +10,8 @@
     "env-inject": "dotenvx run --env-file=.env.local -- concurrently \"npm run monitor-files\" \"pgtyped -w -c ./pgtyped-config.cjs\"",
     "monitor-files": "nodemon --watch ./src --ext ts --exec \"node --inspect -r ts-node/register -r tsconfig-paths/register ./src/index.ts\"",
     "build": "tsc",
-    "start": "dotenvx run -f .env.local -- node ./dist/index.js"
+    "start": "npm run build && dotenvx run -f .env.local -- node ./dist/index.js",
+    "dbinit": "ENV_FILE=${ENV_FILE:-.env} npx dotenvx run -f $ENV_FILE -- sh -c 'psql $PGURI -f init.sql'"
   },
   "keywords": [],
   "author": "",

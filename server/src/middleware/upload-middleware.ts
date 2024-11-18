@@ -18,5 +18,5 @@ export const uploadMiddleware = multer({
     }
   },
 
-  limits: { fileSize: 1000000 }, // 1MB file size limit
+  limits: { fileSize: 10000000 }, // 1MB file size limit
 });
