@@ -1,6 +1,9 @@
 .pageList {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  place-content: start center;
+  align-items: start;
   gap: 0.5em;
+  min-height: 75vh;
+  padding-bottom: 5vh;
 }

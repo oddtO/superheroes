@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { PageLinks } from "./PageLinks";
 export function SuperheroListPaged() {
   const { page: pageParam } = useParams();
+
   const currentPage = pageParam ?? 1;
   const {
     dataToLoad: superheroPreviews,
@@ -22,7 +23,7 @@ export function SuperheroListPaged() {
     <>
       <Button />
       <PagedList data={superheroPreviews} />
-      <PageLinks />
+      <PageLinks currentPage={+currentPage} />
     </>
   );
 }
