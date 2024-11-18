@@ -8,3 +8,9 @@
   min-height: 75vh;
   padding-bottom: 5vh;
 }
+
+.loading {
+  opacity: 0.5;
+  user-select: none;
+  pointer-events: none;
+}
