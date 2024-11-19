@@ -17,6 +17,5 @@ export const uploadMiddleware = multer({
       cb(ApiError.BadRequest("file type not allowed"));
     }
   },
-
-  limits: { fileSize: 10000000 }, // 1MB file size limit
+  limits: { fileSize: 1000000 }, // 1MB file size limit
 });

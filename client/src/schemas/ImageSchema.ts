@@ -1,6 +1,6 @@
 import { z } from "zod"; // Add new import
 import type { ZodError } from "zod";
-const MAX_FILE_SIZE = 10000000;
+const MAX_FILE_SIZE = 1000000;
 const ACCEPTED_IMAGE_TYPES = [
   "image/jpeg",
   "image/jpg",
@@ -11,7 +11,10 @@ const ACCEPTED_IMAGE_TYPES = [
 export const ImageSchema = z.object({
   file: z
     .instanceof(File)
-    .refine((files) => files.size <= MAX_FILE_SIZE, `Max image size is 2MB.`)
+    .refine(
+      (files) => files.size <= MAX_FILE_SIZE,
+      `Max image size is 1MB`,
+    )
     .refine(
       (files) => ACCEPTED_IMAGE_TYPES.includes(files.type),
       "Only .jpg, .jpeg, .png and .webp formats are supported.",

@@ -128,7 +128,7 @@ export function ImageListEditor({
       </div>
       {imgDataUrls.length > 0 ? (
         <ImageList
-          listTitle="You want to upload"
+          listTitle="You want to add"
           srcArr={imgDataUrls}
           altArr={imgNames}
           removeImage={removeImage}
