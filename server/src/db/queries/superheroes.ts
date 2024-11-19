@@ -214,6 +214,7 @@ class Superheroes {
           ORDER BY
             superhero_id
         ) i ON s.id = i.superhero_id
+      ORDER BY s.id
       LIMIT $page_size OFFSET $page_size * ($page - 1);
     `;
 
